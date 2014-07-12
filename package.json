@@ -22,7 +22,7 @@
   "homepage": "https://github.com/WHRB/radio-api",
   "dependencies": {
     "express": "^4.6.0",
-    "radio-plays": "git://github.com/WHRB/plays.git#master",
+    "radio-plays": "git://github.com/WHRB/recent-plays.git#master",
     "logfmt": "^1.1.2"
   }
 }
