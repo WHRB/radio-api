@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/WHRB/radio-api",
   "dependencies": {
-    "express": "^4.4.3",
-    "radio-plays": "git://github.com/WHRB/plays.git#master"
+    "express": "^4.6.0",
+    "radio-plays": "git://github.com/WHRB/plays.git#master",
+    "logfmt": "^1.1.2"
   }
 }
