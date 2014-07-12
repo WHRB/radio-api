@@ -10,7 +10,8 @@ var plays = playsApp({
 		station: process.env.SPIN_STATION,
 		userid: process.env.SPIN_USERID,
 		secret: process.env.SPIN_SECRET
-	}
+	},
+	maxAge: Number(process.env.CACHE_TIME || 15000)
 });
 
 app.use(logfmt.requestLogger());
