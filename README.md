@@ -4,6 +4,7 @@ Node.js radio-api
 A node.js based API for accessing public data about a radio station.
 Designed for deployment on Heroku platform.
 
+### Features
 Supports fetching now playing information from Spinitron
 ```
 http://yourapp.com/nowplaying
