@@ -27,7 +27,7 @@ Example: http://whrb-api.herokuapp.com/nowplaying
 - Show URL
 
 Note: Now playing returns a single JSON object, while recent plays returns an array of JSON objects.
-
+-------------------
 ### Streaming Data
 The streaming data module returns a list of all available streams for a radio station.
 Streams are grouped into stream sets. A set is comprised of one or more stream formats.
@@ -79,7 +79,7 @@ Example:
 	}
 ]
 ```
-
+-------------------
 ### Calendar Feed
 Grabs data from a calendar source and provides it via JSON.
 
