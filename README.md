@@ -14,6 +14,20 @@ http://yourapp.com/recentplays/[num]
 ```
 Example: http://whrb-api.herokuapp.com/nowplaying
 
+#### JSON structure
+##### Guaranteed fields:
+- Date
+- Timestamp
+- ArtistName
+- SongName
+- ComposerName
+- DiskName
+- LabelName
+- Playlist URL
+- Show URL
+
+Note: Now playing returns a single JSON object, while recent plays returns an array of JSON objects.
+
 ### Streaming Data
 To be added soon.
 
