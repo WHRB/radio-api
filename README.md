@@ -38,7 +38,7 @@ See: https://github.com/WHRB/stream-data
 ##### Stream Set:
 - Name
 - Priority (Integer value with 0 denoting highest priority. Priority decreases as value increases)
-- Streams: Array of stream objects ordered from highest to lowest priority. Each stream should be of a different format.
+- Streams: Array of stream objects ordered from highest to lowest priority. Each stream in a set should a unique codec.
 	* URL
 	* Mime-type
 	* Codec
@@ -79,3 +79,19 @@ Example:
 	}
 ]
 ```
+
+### Calendar Feed
+Grabs data from a calendar source and provides it via JSON.
+
+#### JSON structure
+* Calendar Title:
+* Events List:
+	* Title
+	* Description
+	* Start
+		* DateTime
+	* End
+		* DateTime
+
+(potentially fields more to be added)
+
