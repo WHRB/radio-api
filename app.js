@@ -1,6 +1,7 @@
 var express = require('express');
 //var config = require('./config');
 var playsApp = require('radio-plays');
+var streamManager = require('stream-data');
 var logfmt = require("logfmt");
 var app = express();
 
@@ -14,6 +15,8 @@ var plays = playsApp({
 	maxAge: Number(process.env.CACHE_TIME || 15000)
 });
 
+var streams = streamManager({});
+
 app.use(logfmt.requestLogger());
 
 app.get('/nowplaying', function(req, res){
@@ -22,6 +25,10 @@ app.get('/nowplaying', function(req, res){
 
 app.get('/recentplays/:num', function(req, res){
 	res.send(plays.recentPlays(Number(req.params.num)));
+});
+
+app.get('/streams', function(req, res){
+	res.send(streams.streams());
 });
 
 var port = Number(process.env.PORT || 3000);
