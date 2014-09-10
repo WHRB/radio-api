@@ -20,7 +20,7 @@ var schedule = {};
 var get_schedule = function() {
 	var url = 'http://www.google.com/calendar/feeds/'
 			  + process.env.SCHEDULE_ID
-			  + '/public/full?orderby=starttime&sortorder=ascending&futureevents=true&alt=json';
+			  + '/public/full?orderby=starttime&sortorder=ascending&singleevents=true&futureevents=true&alt=json';
 			  http.get(url, function(res) {
 				var body = '';
 
@@ -42,20 +42,20 @@ var streams = streamManager({});
 app.use(logfmt.requestLogger());
 
 app.get('/nowplaying', function(req, res){
-	res.send(plays.recentPlays(1)[0]);
+	res.jsonp(plays.recentPlays(1)[0]);
 });
 
 app.get('/recentplays/:num', function(req, res){
-	res.send(plays.recentPlays(Number(req.params.num)));
+	res.jsonp(plays.recentPlays(Number(req.params.num)));
 });
 
 app.get('/streams', function(req, res){
-	res.send(streams.streams());
+	res.jsonp(streams.streams());
 });
 
 app.get('/schedule', function(req, res){
 	get_schedule();
-	res.send(schedule);
+	res.jsonp(schedule);
 });
 
 var port = Number(process.env.PORT || 3000);
