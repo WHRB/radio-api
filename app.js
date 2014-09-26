@@ -4,6 +4,7 @@ var streamManager = require('stream-data');
 var logfmt = require("logfmt");
 var app = express();
 var http = require('http');
+var moment = require('moment');
 
 var plays = playsApp({
 	source: 'Spinitron',
@@ -20,7 +21,10 @@ var schedule = {};
 var get_schedule = function() {
 	var url = 'http://www.google.com/calendar/feeds/'
 			  + process.env.SCHEDULE_ID
-			  + '/public/full?orderby=starttime&sortorder=ascending&singleevents=true&futureevents=true&alt=json';
+			  + '/public/full?orderby=starttime&sortorder=ascending'
+			  + '&singleevents=true&futureevents=true&alt=json'
+			  + '&start-min='+moment().format("YYYY-MM-DDTHH:mm:ssZ");
+			  console.log(url);
 			  http.get(url, function(res) {
 				var body = '';
 
