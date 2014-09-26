@@ -98,12 +98,7 @@ app.get('/streams', function(req, res){
 
 app.get('/schedule', function(req, res){
 	get_schedule();
-	res.jsonp(schedule.events);
-});
-
-app.get('/schedule/current', function(req, res){
-	get_schedule();
-	res.jsonp(schedule.current);
+	res.jsonp(schedule);
 });
 
 var port = Number(process.env.PORT || 3000);
