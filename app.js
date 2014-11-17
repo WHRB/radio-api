@@ -57,6 +57,11 @@ var processGCalV2 = function (response) {
 var get_schedule = function() {
 	if (isStale(schedule.timestamp)) {
 		console.log('Fetching new calendar');
+
+		schedule.events = [];
+		schedule.timestamp = new Date();
+		// TODO implement google calendar api v3
+		/*
 		var url = 'http://www.google.com/calendar/feeds/'
 				  + process.env.SCHEDULE_ID
 				  + '/public/full?orderby=starttime&sortorder=ascending'
@@ -77,6 +82,7 @@ var get_schedule = function() {
 		}).on('error', function(e) {
 			  console.log("Got error: ", e);
 		});
+		*/
 	}
 }
 
