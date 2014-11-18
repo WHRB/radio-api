@@ -141,9 +141,9 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
 	auth.getToken(req.query.code, function(err, tokens) {
   	// Now tokens contains an access_token and an optional refresh_token. Save them.
 	  if(!err) {
-		auth.setCredentials(tokens);
-		google_tokens = tokens;
-		//console.log(tokens);
+		  auth.setCredentials(tokens);
+		  google_tokens = tokens;
+		  res.redirect('/schedule');
 	  }
 
 	});
