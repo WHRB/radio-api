@@ -75,8 +75,8 @@ var get_schedule = function() {
 		schedule.timestamp = new Date();
 		calendar.events.list({
 			'calendarId': process.env.SCHEDULE_ID,
-			'singleEvents': true,
-			'timeMin': schedule.timestamp
+			'singleEvents': true
+			//'timeMin': schedule.timestamp
 		}, function (err, response) {
 			if (!err) {
 				processGCalV3(response);
