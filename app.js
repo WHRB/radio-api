@@ -79,6 +79,7 @@ var get_schedule = function() {
 			//'timeMin': schedule.timestamp
 		}, function (err, response) {
 			if (!err) {
+				console.log(response);
 				processGCalV3(response);
 			} else {
 				console.log("Got calendar error: ", err);
