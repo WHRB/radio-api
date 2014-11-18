@@ -67,6 +67,29 @@ var processGCalV3 = function (response) {
     schedule.timestamp = new Date();
 }
 
+var saveTokens = function (tokens) {
+	// Save tokens to database
+	pg.connect(process.env.DATABASE_URL, function(err, client) {
+		if(err) {
+			return console.error('could not connect to postgres', err);
+		}
+
+		client.query('TRUNCATE TABLE tokens', function(err, result) {
+			if(err) {
+				return console.error('error truncating token table', err);
+			}
+			client.query('INSERT INTO tokens (ACCESS, REFRESH) VALUES($1, $2)',
+			[tokens.access_token, tokens.refresh_token], function(err, result) {
+				if(err) {
+					return console.error('error saving tokens', err);
+				}
+				client.end();
+			});
+		});
+
+	});
+}
+
 var getSchedule = function() {
     if (isStale(schedule.timestamp)) {
         console.log('Fetching new calendar');
@@ -78,11 +101,19 @@ var getSchedule = function() {
             'singleEvents': true,
             'orderBy': 'startTime',
             'timeMin': schedule.timestamp.toISOString()
-            //'timeMin': schedule.timestamp
         }, function (err, response) {
             if (!err) {
                 processGCalV3(response);
             } else {
+            	auth.refreshAccessToken(function(err, tokens) {
+				  // your access_token is now refreshed and stored in oauth2Client
+				  // store these new tokens in a safe place (e.g. database)
+				  if (err) {
+				  	console.log("Error refreshing tokens: ", err);
+				  	return;
+				  }
+				  saveTokens(tokens);
+				});
                 console.log("Got calendar error: ", err);
             }
         });
@@ -162,26 +193,7 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
             google_tokens = tokens;
             console.log(tokens);
 
-            // Save tokens to database
-            pg.connect(process.env.DATABASE_URL, function(err, client) {
-                if(err) {
-                    return console.error('could not connect to postgres', err);
-                }
-
-                client.query('TRUNCATE TABLE tokens', function(err, result) {
-                    if(err) {
-                        return console.error('error truncating token table', err);
-                    }
-                    client.query('INSERT INTO tokens (ACCESS, REFRESH) VALUES($1, $2)',
-                    [tokens.access_token, tokens.refresh_token], function(err, result) {
-                        if(err) {
-                            return console.error('error saving tokens', err);
-                        }
-                        client.end();
-                    });
-                });
-
-            });
+			saveTokens(tokens);
 
             res.redirect('/schedule');
         } else {
