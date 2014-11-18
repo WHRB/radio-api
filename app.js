@@ -31,8 +31,7 @@ var calendar = googleapis.calendar('v3');
 var schedule = {
     timestamp: 0,
     events: {},
-    current: {},
-    v3: {}
+    current: {}
 };
 
 var isStale = function(timestamp) {
@@ -93,9 +92,8 @@ var saveTokens = function (tokens) {
 var getSchedule = function() {
     if (isStale(schedule.timestamp)) {
         console.log('Fetching new calendar');
-
-        schedule.events = [];
         schedule.timestamp = new Date();
+        // make call to api
         calendar.events.list({
             'calendarId': process.env.SCHEDULE_ID,
             'singleEvents': true,
@@ -106,13 +104,13 @@ var getSchedule = function() {
                 processGCalV3(response);
             } else {
             	auth.refreshAccessToken(function(err, tokens) {
-				  // your access_token is now refreshed and stored in oauth2Client
-				  // store these new tokens in a safe place (e.g. database)
-				  if (err) {
-				  	console.log("Error refreshing tokens: ", err);
-				  	return;
-				  }
-				  saveTokens(tokens);
+				    // your access_token is now refreshed and stored in oauth2Client
+				    // store these new tokens in a safe place (e.g. database)
+				    if (err) {
+				  	  console.log("Error refreshing tokens: ", err);
+				  	  return;
+				    }
+				    saveTokens(tokens);
 				});
                 console.log("Got calendar error: ", err);
             }
@@ -144,7 +142,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
                   access_token: result.rows[0].access,
                   refresh_token: result.rows[0].refresh
               }
-              console.log(google_tokens);
               auth.setCredentials(google_tokens);
               getSchedule();
           }
@@ -191,10 +188,7 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
         if(!err) {
             auth.setCredentials(tokens);
             google_tokens = tokens;
-            console.log(tokens);
-
 			saveTokens(tokens);
-
             res.redirect('/schedule');
         } else {
             console.error('error getting auth tokens', err);
