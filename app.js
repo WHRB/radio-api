@@ -126,10 +126,10 @@ app.get('/api_auth', function(req, res){
 });
 
 app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
-	oauth2Client.getToken(req.query.code, function(err, tokens) {
+	auth.getToken(req.query.code, function(err, tokens) {
   	// Now tokens contains an access_token and an optional refresh_token. Save them.
 	  if(!err) {
-		oauth2Client.setCredentials(tokens);
+		auth.setCredentials(tokens);
 		google_tokens = tokens;
 		console.log(tokens);
 	  }
