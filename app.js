@@ -74,7 +74,7 @@ var get_schedule = function() {
 		schedule.events = [];
 		schedule.timestamp = new Date();
 		// TODO implement google calendar api v3
-		calendar.calendars.get({'calendarId': process.env.SCHEDULE_ID}, function (err, response) {
+		calendar.events.list({'calendarId': process.env.SCHEDULE_ID}, function (err, response) {
 			if (!err) {
 				schedule.v3 = response;
 				console.log(response);
