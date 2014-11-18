@@ -122,6 +122,7 @@ app.get('/api_auth', function(req, res){
 	  access_type: 'offline',
 	  scope: process.env.GOOGLE_SCOPE
 	});
+	res.redirect(url);
 });
 
 app.get(process.env.GOOGLE_REDIRECT_URL, function(req, res){
