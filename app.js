@@ -100,9 +100,7 @@ var getSchedule = function() {
             'orderBy': 'startTime',
             'timeMin': schedule.timestamp.toISOString()
         }, function (err, response) {
-            if (!err) {
-                processGCalV3(response);
-            } else {
+            if (err) {
             	auth.refreshAccessToken(function(err, tokens) {
 				    // your access_token is now refreshed and stored in oauth2Client
 				    // store these new tokens in a safe place (e.g. database)
@@ -113,7 +111,9 @@ var getSchedule = function() {
 				    saveTokens(tokens);
 				});
                 console.log("Got calendar error: ", err);
+                return;
             }
+            processGCalV3(response);
         });
     }
 }
