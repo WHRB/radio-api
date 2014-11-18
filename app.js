@@ -7,20 +7,7 @@ var http = require('http');
 var moment = require('moment');
 var googleapis = require('googleapis');
 var pg = require('pg');
-
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if(err) {
-    return console.error('could not connect to postgres', err);
-  }
-  client.query('CREATE TABLE IF NOT EXISTS tokens (\
-  	ID INT PRIMARY KEY NOT NULL,\
-  	REFRESH CHAR(255) NOT NULL)', function(err, result) {
-    if(err) {
-      return console.error('error running query', err);
-    }
-    client.end();
-  });
-});
+var google_tokens = null;
 
 var plays = playsApp({
 	source: 'Spinitron',
@@ -47,8 +34,6 @@ var schedule = {
 	current: {},
 	v3: {}
 };
-
-var google_tokens = null;
 
 var isStale = function(timestamp) {
 	diff = new Date() - timestamp;
@@ -82,7 +67,7 @@ var processGCalV3 = function (response) {
 	schedule.timestamp = new Date();
 }
 
-var get_schedule = function() {
+var getSchedule = function() {
 	if (isStale(schedule.timestamp)) {
 		console.log('Fetching new calendar');
 
@@ -108,6 +93,37 @@ var streams = streamManager({});
 
 app.use(logfmt.requestLogger());
 
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+  client.query('CREATE TABLE IF NOT EXISTS tokens (\
+  	ID INT PRIMARY KEY NOT NULL,\
+  	REFRESH TEXT NOT NULL,\
+  	ACCESS TEXT NOT NULL)', function(err, result) {
+    if(err) {
+      return console.error('error running query', err);
+    }
+    client.end();
+  });
+
+  client.query('SELECT * FROM tokens', function(err, result) {
+    if(err) {
+      return console.error('error running token query', err);
+    }
+    if (result.rows.length > 0) {
+		google_tokens = {
+			access_token = result.rows[0].ACCESS,
+			refresh_token = result.rows[0].REFRESH
+		}
+		auth.setCredentials(google_tokens);
+		getSchedule();
+    }
+    client.end();
+  });
+});
+
+
 app.get('/nowplaying', function(req, res){
 	res.jsonp(plays.recentPlays(1)[0]);
 });
@@ -121,27 +137,54 @@ app.get('/streams', function(req, res){
 });
 
 app.get('/schedule', function(req, res){
-	get_schedule();
+	getSchedule();
 	res.jsonp(schedule);
 });
 
 app.get('/api_auth', function(req, res){
-	var url = auth.generateAuthUrl({
-	  access_type: 'offline',
-	  scope: process.env.GOOGLE_SCOPE
-	});
-	res.redirect(url);
+	if (google_tokens == null) {
+		var url = auth.generateAuthUrl({
+		  access_type: 'offline',
+		  scope: process.env.GOOGLE_SCOPE
+		});
+		res.redirect(url);
+	} else {
+		// We've already authenticated.
+		res.redirect('/schedule');
+	}
 });
 
 app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
 	auth.getToken(req.query.code, function(err, tokens) {
-  		// Now tokens contains an access_token and an optional refresh_token. Save them.
+
 		if(!err) {
 			auth.setCredentials(tokens);
 			google_tokens = tokens;
+
+			// Save tokens to database
+			pg.connect(process.env.DATABASE_URL, function(err, client) {
+				if(err) {
+					return console.error('could not connect to postgres', err);
+				}
+
+				client.query('TRUNCATE TABLE tokens', function(err, result) {
+					if(err) {
+						return console.error('error truncating token table', err);
+					}
+					client.end();
+				});
+				client.query('INSERT INTO tokens (ACCESS, REFRESH) VALUES($1, $2)',
+				[tokens.access_token, tokens.refresh_token], function(err, result) {
+					if(err) {
+						return console.error('error saving tokens', err);
+					}
+					client.end();
+				});
+			});
+
 			res.redirect('/schedule');
 		} else {
-			// handle error
+			console.error('error getting auth tokens', err);
 		}
 	});
 });
@@ -149,5 +192,4 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
 var port = Number(process.env.PORT || 3000);
 var server = app.listen(port, function() {
     console.log('Listening on port %d', server.address().port);
-    //get_schedule();
 });
