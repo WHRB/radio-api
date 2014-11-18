@@ -125,7 +125,7 @@ app.get('/api_auth', function(req, res){
 	res.redirect(url);
 });
 
-app.get(process.env.GOOGLE_REDIRECT_URL, function(req, res){
+app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
 	oauth2Client.getToken(req.query.code, function(err, tokens) {
   	// Now tokens contains an access_token and an optional refresh_token. Save them.
 	  if(!err) {
