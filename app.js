@@ -173,15 +173,15 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
 					if(err) {
 						return console.error('error truncating token table', err);
 					}
-					client.end();
+					client.query('INSERT INTO tokens (ACCESS, REFRESH) VALUES($1, $2)',
+					[tokens.access_token, tokens.refresh_token], function(err, result) {
+						if(err) {
+							return console.error('error saving tokens', err);
+						}
+						client.end();
+					});
 				});
-				client.query('INSERT INTO tokens (ACCESS, REFRESH) VALUES($1, $2)',
-				[tokens.access_token, tokens.refresh_token], function(err, result) {
-					if(err) {
-						return console.error('error saving tokens', err);
-					}
-					client.end();
-				});
+
 			});
 
 			res.redirect('/schedule');
