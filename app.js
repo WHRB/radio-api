@@ -6,25 +6,20 @@ var app = express();
 var http = require('http');
 var moment = require('moment');
 var googleapis = require('googleapis');
-var mysql = require('mysql');
+var pg = require('pg');
 
-var connection = mysql.createConnection({
-	host: process.env.MYSQL_HOST,
-	user: process.env.MYSQL_USER,
-	password: process.env.MYSQL_PASSWORD,
-	database: process.env.MYSQL_DB
-});
-
-connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
   }
-
-  console.log('connected as id ' + connection.threadId);
+  client.query('SELECT NOW() AS "theTime"', function(err, result) {
+    if(err) {
+      return console.error('error running query', err);
+    }
+    console.log(result.rows[0].theTime);
+    client.end();
+  });
 });
-
-connection.end();
 
 var plays = playsApp({
 	source: 'Spinitron',
