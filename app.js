@@ -6,6 +6,25 @@ var app = express();
 var http = require('http');
 var moment = require('moment');
 var googleapis = require('googleapis');
+var mysql = require('mysql');
+
+var connection = mysql.createConnection({
+	host: process.env.MYSQL_HOST,
+	user: process.env.MYSQL_USER,
+	password: process.env.MYSQL_PASSWORD,
+	database: process.env.MYSQL_DB
+});
+
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+
+  console.log('connected as id ' + connection.threadId);
+});
+
+connection.end();
 
 var plays = playsApp({
 	source: 'Spinitron',
@@ -81,7 +100,6 @@ var get_schedule = function() {
 			//'timeMin': schedule.timestamp
 		}, function (err, response) {
 			if (!err) {
-				console.log(response);
 				processGCalV3(response);
 			} else {
 				console.log("Got calendar error: ", err);
