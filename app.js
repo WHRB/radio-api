@@ -160,6 +160,7 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
 		if(!err) {
 			auth.setCredentials(tokens);
 			google_tokens = tokens;
+			console.log(tokens);
 
 			// Save tokens to database
 			pg.connect(process.env.DATABASE_URL, function(err, client) {
