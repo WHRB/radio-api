@@ -98,7 +98,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     return console.error('could not connect to postgres', err);
   }
   client.query('CREATE TABLE IF NOT EXISTS tokens (\
-  	ID INT PRIMARY KEY NOT NULL,\
+  	ID SERIAL PRIMARY KEY,\
   	REFRESH TEXT NOT NULL,\
   	ACCESS TEXT NOT NULL)', function(err, result) {
     if(err) {
