@@ -144,7 +144,8 @@ app.get('/schedule', function(req, res){
 app.get('/api_auth', function(req, res){
 	if (google_tokens == null) {
 		var url = auth.generateAuthUrl({
-		  grant_type: 'refresh_token',
+		  access_type: 'offline',
+		  approval_prompt: 'force',
 		  scope: process.env.GOOGLE_SCOPE
 		});
 		res.redirect(url);
