@@ -77,7 +77,7 @@ var get_schedule = function() {
 			'calendarId': process.env.SCHEDULE_ID,
 			'singleEvents': true,
 			'orderBy': 'startTime',
-			'timeMin': new Date()
+			'timeMin': schedule.timestamp.toUTCString()
 			//'timeMin': schedule.timestamp
 		}, function (err, response) {
 			if (!err) {
