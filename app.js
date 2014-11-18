@@ -12,11 +12,12 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   if(err) {
     return console.error('could not connect to postgres', err);
   }
-  client.query('SELECT NOW() AS "theTime"', function(err, result) {
+  client.query('CREATE TABLE IF NOT EXISTS tokens (\
+  	ID INT PRIMARY KEY NOT NULL,\
+  	REFRESH CHAR(255) NOT NULL)', function(err, result) {
     if(err) {
       return console.error('error running query', err);
     }
-    console.log(result.rows[0].theTime);
     client.end();
   });
 });
