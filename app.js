@@ -23,11 +23,14 @@ var auth = new OAuth2(
 	process.env.GOOGLE_CLIENT_SECRET,
 	process.env.GOOGLE_REDIRECT_URL
 );
+googleapis.options({ auth: auth });
+var calendar = googleapis.calendar('v3');
 
 var schedule = {
 	timestamp: 0,
 	events: {},
-	current: {}
+	current: {},
+	v3: {}
 };
 
 var google_tokens = null;
@@ -71,6 +74,14 @@ var get_schedule = function() {
 		schedule.events = [];
 		schedule.timestamp = new Date();
 		// TODO implement google calendar api v3
+		calendar.calendars.get({'calendarId': process.env.SCHEDULE_ID}, function (err, response) {
+			if (!err) {
+				schedule.v3 = response;
+				console.log(response);
+			} else {
+
+			}
+		});
 		/*
 		var url = 'http://www.google.com/calendar/feeds/'
 				  + process.env.SCHEDULE_ID
@@ -114,6 +125,7 @@ app.get('/streams', function(req, res){
 
 app.get('/schedule', function(req, res){
 	get_schedule();
+	console.log(schedule.v3);
 	res.jsonp(schedule);
 });
 
@@ -131,13 +143,14 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
 	  if(!err) {
 		auth.setCredentials(tokens);
 		google_tokens = tokens;
-		console.log(tokens);
+		//console.log(tokens);
 	  }
+
 	});
 });
 
 var port = Number(process.env.PORT || 3000);
 var server = app.listen(port, function() {
     console.log('Listening on port %d', server.address().port);
-    get_schedule();
+    //get_schedule();
 });
