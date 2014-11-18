@@ -98,28 +98,27 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     return console.error('could not connect to postgres', err);
   }
   client.query('CREATE TABLE IF NOT EXISTS tokens (\
-  	ID SERIAL PRIMARY KEY,\
-  	REFRESH TEXT NOT NULL,\
-  	ACCESS TEXT NOT NULL)', function(err, result) {
-    if(err) {
-      return console.error('error running query', err);
-    }
-    client.end();
-  });
-
-  client.query('SELECT * FROM tokens', function(err, result) {
-    if(err) {
-      return console.error('error running token query', err);
-    }
-    if (result.rows.length > 0) {
-		google_tokens = {
-			access_token: result.rows[0].ACCESS,
-			refresh_token: result.rows[0].REFRESH
-		}
-		auth.setCredentials(google_tokens);
-		getSchedule();
-    }
-    client.end();
+  	  ID SERIAL PRIMARY KEY,\
+  	  REFRESH TEXT NOT NULL,\
+  	  ACCESS TEXT NOT NULL)', function(err, result) {
+      if(err) {
+      	  return console.error('error running query', err);
+      }
+      client.query('SELECT * FROM tokens', function(err, result) {
+		  if(err) {
+		    return console.error('error running token query', err);
+		  }
+		  if (result.rows.length > 0) {
+			  google_tokens = {
+				  access_token: result.rows[0].access,
+				  refresh_token: result.rows[0].refresh
+			  }
+			  console.log(google_tokens);
+			  auth.setCredentials(google_tokens);
+			  getSchedule();
+		  }
+		  client.end();
+	  });
   });
 });
 
