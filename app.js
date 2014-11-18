@@ -76,7 +76,8 @@ var get_schedule = function() {
 		calendar.events.list({
 			'calendarId': process.env.SCHEDULE_ID,
 			'singleEvents': true,
-			'orderBy': 'startTime'
+			'orderBy': 'startTime',
+			'timeMin': new Date()
 			//'timeMin': schedule.timestamp
 		}, function (err, response) {
 			if (!err) {
