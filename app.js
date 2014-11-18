@@ -113,8 +113,8 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     }
     if (result.rows.length > 0) {
 		google_tokens = {
-			access_token = result.rows[0].ACCESS,
-			refresh_token = result.rows[0].REFRESH
+			access_token: result.rows[0].ACCESS,
+			refresh_token: result.rows[0].REFRESH
 		}
 		auth.setCredentials(google_tokens);
 		getSchedule();
