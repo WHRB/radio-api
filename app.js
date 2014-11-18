@@ -5,6 +5,7 @@ var logfmt = require("logfmt");
 var app = express();
 var http = require('http');
 var moment = require('moment');
+var googleapis = require('googleapis');
 
 var plays = playsApp({
 	source: 'Spinitron',
@@ -16,11 +17,19 @@ var plays = playsApp({
 	maxAge: Number(process.env.CACHE_TIME || 15000)
 });
 
+var auth = new googleapis.OAuth2Client(
+	process.env.GOOGLE_CLIENT_ID,
+	process.env.GOOGLE_CLIENT_SECRET,
+	process.env.GOOGLE_REDIRECT_URL
+);
+
 var schedule = {
 	timestamp: 0,
 	events: {},
 	current: {}
 };
+
+var google_tokens = null;
 
 var isStale = function(timestamp) {
 	diff = new Date() - timestamp;
@@ -105,6 +114,24 @@ app.get('/streams', function(req, res){
 app.get('/schedule', function(req, res){
 	get_schedule();
 	res.jsonp(schedule);
+});
+
+app.get('/api_auth', function(req, res){
+	var url = auth.generateAuthUrl({
+	  access_type: 'offline',
+	  scope: process.env.GOOGLE_SCOPE
+	});
+});
+
+app.get(process.env.GOOGLE_REDIRECT_URL, function(req, res){
+	oauth2Client.getToken(req.query.code, function(err, tokens) {
+  	// Now tokens contains an access_token and an optional refresh_token. Save them.
+	  if(!err) {
+		oauth2Client.setCredentials(tokens);
+		google_tokens = tokens;
+		console.log(tokens);
+	  }
+	});
 });
 
 var port = Number(process.env.PORT || 3000);
