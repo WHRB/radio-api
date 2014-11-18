@@ -43,16 +43,16 @@ var isStale = function(timestamp) {
 	return false;
 }
 
-var processGCalV2 = function (response) {
-	var events = response.feed.entry;
+var processGCalV3 = function (response) {
+	var events = response.items;
 	var newEvents = [];
 	var now = moment();
 	for (i in events) {
 		var e = {
-			title: events[i].title.$t,
-			content: events[i].content.$t,
-			startTime: events[i].gd$when[0].startTime,
-			endTime: events[i].gd$when[0].endTime
+			title: events[i].summary,
+			content: '',
+			startTime: events[i].start.dateTime,
+			endTime: events[i].end.dateTime
 		}
 
 		var startMoment = moment(e.startTime);
@@ -74,36 +74,16 @@ var get_schedule = function() {
 		schedule.events = [];
 		schedule.timestamp = new Date();
 		// TODO implement google calendar api v3
-		calendar.events.list({'calendarId': process.env.SCHEDULE_ID}, function (err, response) {
+		calendar.events.list({
+			'calendarId': process.env.SCHEDULE_ID,
+			'params.singleEvents': true
+		}, function (err, response) {
 			if (!err) {
-				schedule.v3 = response;
-				console.log(response);
+				processGCalV3(response);
 			} else {
-
+				console.log("Got calendar error: ", err);
 			}
 		});
-		/*
-		var url = 'http://www.google.com/calendar/feeds/'
-				  + process.env.SCHEDULE_ID
-				  + '/public/full?orderby=starttime&sortorder=ascending'
-				  + '&singleevents=true&futureevents=true&alt=json';
-				  //+ encodeURI('&start-min='+moment().format("YYYY-MM-DDTHH:mm:ssZ"));
-				  //console.log(url);
-		http.get(url, function(res) {
-			var body = '';
-
-			res.on('data', function(chunk) {
-				body += chunk;
-			});
-
-			res.on('end', function() {
-				processGCalV2(JSON.parse(body));
-
-			});
-		}).on('error', function(e) {
-			  console.log("Got error: ", e);
-		});
-		*/
 	}
 }
 
@@ -125,7 +105,6 @@ app.get('/streams', function(req, res){
 
 app.get('/schedule', function(req, res){
 	get_schedule();
-	console.log(schedule.v3);
 	res.jsonp(schedule);
 });
 
@@ -139,13 +118,14 @@ app.get('/api_auth', function(req, res){
 
 app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
 	auth.getToken(req.query.code, function(err, tokens) {
-  	// Now tokens contains an access_token and an optional refresh_token. Save them.
-	  if(!err) {
-		  auth.setCredentials(tokens);
-		  google_tokens = tokens;
-		  res.redirect('/schedule');
-	  }
-
+  		// Now tokens contains an access_token and an optional refresh_token. Save them.
+		if(!err) {
+			auth.setCredentials(tokens);
+			google_tokens = tokens;
+			res.redirect('/schedule');
+		} else {
+			// handle error
+		}
 	});
 });
 
