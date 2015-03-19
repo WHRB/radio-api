@@ -176,7 +176,7 @@ app.get('/schedule', function(req, res){
     getSchedule();
     res.jsonp(schedule);
 });
-/*
+
 // Authenticate with google.
 app.get('/api_auth', function(req, res){
     if (google_tokens == null) {
@@ -205,7 +205,7 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
         }
     });
 });
-*/
+
 var port = Number(process.env.PORT || 3000);
 var server = app.listen(port, function() {
     console.log('Listening on port %d', server.address().port);
