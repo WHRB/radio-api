@@ -151,6 +151,8 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 
 
 app.get('/nowplaying', function(req, res){
+    
+    res.jsonp(null);
     var data = plays.recentPlays(1);
     var dataResponse = null;
     if (Array.isArray(data) === true) {
@@ -160,6 +162,7 @@ app.get('/nowplaying', function(req, res){
 });
 
 app.get('/recentplays/:num', function(req, res){
+    res.jsonp(null);
     var data = plays.recentPlays(Number(req.params.num));
     var dataResponse = null;
     if (Array.isArray(data) === true) {
