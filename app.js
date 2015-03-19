@@ -152,6 +152,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 
 app.get('/nowplaying', function(req, res){
     var data = plays.recentPlays(1);
+    console.log(data);
     var dataResponse = {};
     if (Array.isArray(data) === true) {
       dataResponse = data[0];
@@ -161,6 +162,7 @@ app.get('/nowplaying', function(req, res){
 
 app.get('/recentplays/:num', function(req, res){
     var data = plays.recentPlays(Number(req.params.num));
+    console.log(data);
     var dataResponse = {};
     if (Array.isArray(data) === true) {
       dataResponse = data;
