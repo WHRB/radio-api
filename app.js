@@ -151,11 +151,21 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 
 
 app.get('/nowplaying', function(req, res){
-    res.jsonp(plays.recentPlays(1)[0]);
+    var data = plays.recentPlays(1);
+    var dataResponse = {};
+    if (Array.isArray(data) === true) {
+      dataResponse = data[0];
+    } 
+    res.jsonp(dataResponse);
 });
 
 app.get('/recentplays/:num', function(req, res){
-    res.jsonp(plays.recentPlays(Number(req.params.num)));
+    var data = plays.recentPlays(Number(req.params.num));
+    var dataResponse = {};
+    if (Array.isArray(data) === true) {
+      dataResponse = data;
+    } 
+    res.jsonp(dataResponse);
 });
 
 app.get('/streams', function(req, res){
@@ -166,7 +176,7 @@ app.get('/schedule', function(req, res){
     getSchedule();
     res.jsonp(schedule);
 });
-
+/*
 // Authenticate with google.
 app.get('/api_auth', function(req, res){
     if (google_tokens == null) {
@@ -195,7 +205,7 @@ app.get(process.env.GOOGLE_REDIRECT_PATH, function(req, res){
         }
     });
 });
-
+*/
 var port = Number(process.env.PORT || 3000);
 var server = app.listen(port, function() {
     console.log('Listening on port %d', server.address().port);
