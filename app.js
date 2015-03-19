@@ -167,6 +167,7 @@ app.get('/schedule', function(req, res){
     res.jsonp(schedule);
 });
 
+// Authenticate with google.
 app.get('/api_auth', function(req, res){
     if (google_tokens == null) {
         var url = auth.generateAuthUrl({
