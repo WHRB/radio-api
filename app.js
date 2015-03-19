@@ -103,7 +103,6 @@ var getSchedule = function() {
             if (err) {
             	auth.refreshAccessToken(function(err, tokens) {
 				    // your access_token is now refreshed and stored in oauth2Client
-				    // store these new tokens in a safe place (e.g. database)
 				    if (err) {
 				  	  console.log("Error refreshing tokens: ", err);
 				  	  return;
