@@ -28,7 +28,8 @@
     "moment": "^2.8.3",
     "googleapis": "^1.0.21",
     "mysql": "^2.5.3",
-    "pg": "^3.6.3"
+    "pg": "^3.6.3",
+    "compression": "^1.4.3"
   },
   "devDependencies": {
     "mocha": "^1.20.1"

@@ -2,7 +2,12 @@ var express = require('express');
 var playsApp = require('radio-plays');
 var streamManager = require('stream-data');
 var logfmt = require("logfmt");
+
 var app = express();
+var compress = require('compression');
+
+app.use(compress());
+
 var http = require('http');
 var moment = require('moment');
 var googleapis = require('googleapis');
@@ -155,7 +160,7 @@ app.get('/nowplaying', function(req, res){
     var playData = plays.recentPlays(1);
     if (Array.isArray(playData) === true) {
       playData = playData[0];
-    } 
+    }
     res.jsonp(playData);
 });
 
