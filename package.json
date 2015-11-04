@@ -2,6 +2,9 @@
   "name": "radio-api",
   "version": "1.0.0",
   "description": "Besic web API for accessing public data about a radio station.",
+  "engines": {
+    "node": "4.2.1"
+  },
   "main": "app.js",
   "directories": {
     "test": "test"
@@ -25,9 +28,9 @@
   "homepage": "https://github.com/WHRB/radio-api",
   "dependencies": {
     "express": "^4.6.0",
-    "radio-plays": "git://github.com/WHRB/recent-plays.git#master",
+    "radio-plays": "git://github.com/WHRB/recent-plays.git#v1.0.0",
     "stream-data": "git://github.com/WHRB/stream-data.git#master",
-    "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#master",
+    "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#v1.0.2",
     "logfmt": "^1.1.2",
     "moment": "^2.8.3",
     "compression": "^1.4.3"

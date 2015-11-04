@@ -1,8 +1,7 @@
 Node.js radio-api [![Build Status](https://travis-ci.org/WHRB/radio-api.svg?branch=master)](https://travis-ci.org/WHRB/radio-api)
 =========
 
-A node.js based API for accessing public data about a radio station.
-Designed for deployment on Heroku platform.
+A node.js and express.js based API for accessing data about a radio station include recent plays, and upcoming schedule.
 
 ### Now Playing Information
 See: https://github.com/WHRB/recent-plays

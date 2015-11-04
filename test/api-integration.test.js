@@ -23,7 +23,7 @@ describe("/schedule", function () {
     app.close();
   });
 
-  it("should return valid schedule events", function(done){
+  it("should return valid schedule events", function (done){
 
     request("http://localhost:3000/schedule", function (error, response, body) {
       if (error) {
@@ -49,13 +49,71 @@ describe("/schedule", function () {
 
 describe("/nowplaying", function () {
 
-  it("should return the current playing song data");
+  var app;
+
+  this.timeout(5000);
+
+  before(function() {
+    app = makeServer(3000);
+  });
+
+  after(function() {
+    app.close();
+  });
+
+  it("should return current playing song data", function (done) {
+
+    request("http://localhost:3000/nowplaying", function (error, response, body) {
+      if (error) {
+        throw error;
+      }
+
+      expect(response.statusCode).to.equal(200);
+      var songData = JSON.parse(body);
+
+      expect(songData).to.be.an("object");
+      expect(songData).to.have.property("SongName");
+      expect(songData).to.have.property("ShowInfo");
+
+      done();
+    });
+
+  });
 
 });
 
 describe("/recentplays", function () {
 
-  it("should return the specified number of recently played songs");
+  var app;
+
+  this.timeout(5000);
+
+  before(function() {
+    app = makeServer(3000);
+  });
+
+  after(function() {
+    app.close();
+  });
+
+  it("should return the specified number of recently played songs", function (done) {
+
+    request("http://localhost:3000/recentplays/3", function (error, response, body) {
+      if (error) {
+        throw error;
+      }
+
+      expect(response.statusCode).to.equal(200);
+      var songData = JSON.parse(body);
+
+      expect(songData.length).to.equal(3);
+      expect(songData[0]).to.have.property("SongName");
+      expect(songData[0]).to.have.property("ShowInfo");
+
+      done();
+    });
+
+  });
 
 });
 
