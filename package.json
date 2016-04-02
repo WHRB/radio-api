@@ -1,6 +1,6 @@
 {
   "name": "radio-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Besic web API for accessing public data about a radio station.",
   "engines": {
     "node": "4.2.1"
