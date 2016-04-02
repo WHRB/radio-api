@@ -28,7 +28,7 @@
   "homepage": "https://github.com/WHRB/radio-api",
   "dependencies": {
     "express": "^4.6.0",
-    "radio-plays": "git://github.com/WHRB/recent-plays.git#v1.0.0",
+    "radio-plays": "git://github.com/WHRB/recent-plays.git#v1.0.1",
     "stream-data": "git://github.com/WHRB/stream-data.git#master",
     "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#v1.0.2",
     "logfmt": "^1.1.2",
