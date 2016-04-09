@@ -21,19 +21,20 @@
     "api"
   ],
   "author": "Carl Pillot",
-  "license": "GPLv2",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/WHRB/radio-api/issues"
   },
   "homepage": "https://github.com/WHRB/radio-api",
   "dependencies": {
+    "compression": "^1.4.3",
+    "cors": "^2.7.1",
     "express": "^4.6.0",
-    "radio-plays": "git://github.com/WHRB/recent-plays.git#v2.0.0",
-    "stream-data": "git://github.com/WHRB/stream-data.git#master",
-    "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#v1.0.2",
     "logfmt": "^1.1.2",
     "moment": "^2.8.3",
-    "compression": "^1.4.3"
+    "radio-plays": "git://github.com/WHRB/recent-plays.git#v2.0.0",
+    "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#v1.0.2",
+    "stream-data": "git://github.com/WHRB/stream-data.git#master"
   },
   "devDependencies": {
     "mocha": "^1.20.1",
