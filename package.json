@@ -35,7 +35,7 @@
     "logfmt": "^1.1.2",
     "moment": "^2.14.1",
     "ms": "^0.7.1",
-    "node-cache": "^3.2.1",
+    "node-cache": "^4.1.1",
     "node-fetch": "^1.6.0",
     "pg": "^6.1.0",
     "pg-query": "^0.11.0",
@@ -44,11 +44,11 @@
     "stream-data": "git://github.com/WHRB/stream-data.git#master"
   },
   "devDependencies": {
-    "mocha": "^1.20.1",
     "chai": "^3.4.0",
-    "request": "^2.65.0",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-react": "^4.3.0"
+    "eslint-plugin-react": "^4.3.0",
+    "mocha": "^1.20.1",
+    "request": "^2.65.0"
   }
 }
