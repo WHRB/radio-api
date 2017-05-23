@@ -27,28 +27,30 @@
   },
   "homepage": "https://github.com/WHRB/radio-api",
   "dependencies": {
-    "bluebird": "^3.4.6",
+    "bluebird": "^3.5.0",
     "compression": "^1.6.2",
-    "cors": "^2.8.0",
-    "express": "^4.14.0",
+    "cors": "^2.8.3",
+    "express": "^4.15.3",
     "lodash": "^4.15.0",
     "logfmt": "^1.1.2",
-    "moment": "^2.14.1",
-    "ms": "^0.7.1",
+    "moment": "^2.18.1",
+    "ms": "^2.0.0",
     "node-cache": "^4.1.1",
     "node-fetch": "^1.6.0",
-    "pg": "^6.1.0",
+    "pg": "^6.2.2",
     "pg-query": "^0.11.0",
     "radio-plays": "git://github.com/WHRB/recent-plays.git#v2.0.0",
-    "request": "^2.65.0",
+    "request": "^2.81.0",
     "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#v1.0.2",
     "stream-data": "git://github.com/WHRB/stream-data.git#master"
   },
   "devDependencies": {
     "chai": "^3.4.0",
-    "eslint": "^2.7.0",
-    "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-react": "^4.3.0",
-    "mocha": "^1.20.1"
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1",
+    "mocha": "^3.4.1"
   }
 }
