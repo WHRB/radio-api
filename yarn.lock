@@ -1267,7 +1267,13 @@ mocha@^3.4.1:
     mkdirp "0.5.1"
     supports-color "3.1.2"
 
-moment@^2.10.6, moment@^2.18.1:
+moment-timezone@^0.5.13:
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.13.tgz#99ce5c7d827262eb0f1f702044177f60745d7b90"
+  dependencies:
+    moment ">= 2.9.0"
+
+"moment@>= 2.9.0", moment@^2.10.6, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -1528,12 +1534,13 @@ qs@6.4.0, qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
-"radio-plays@git://github.com/WHRB/recent-plays.git#v2.0.0":
-  version "2.0.0"
-  resolved "git://github.com/WHRB/recent-plays.git#b87a4715143668875fefd1546314dff38f451408"
+"radio-plays@git://github.com/WHRB/recent-plays.git#v2.1.0":
+  version "2.1.0"
+  resolved "git://github.com/WHRB/recent-plays.git#0005a1fe26452096f878854794e09103839d20b1"
   dependencies:
     bluebird "^3.3.4"
     md5 "^2.1.0"
+    moment-timezone "^0.5.13"
     node-cache "^3.2.1"
     node-fetch "^1.5.0"
     spinpapi-client "git://github.com/WHRB/SpinPapi-JS-Client.git#v1.0.0"

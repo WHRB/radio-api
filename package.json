@@ -39,7 +39,7 @@
     "node-fetch": "^1.6.0",
     "pg": "^6.2.2",
     "pg-query": "^0.11.0",
-    "radio-plays": "git://github.com/WHRB/recent-plays.git#v2.0.0",
+    "radio-plays": "git://github.com/WHRB/recent-plays.git#v2.1.0",
     "request": "^2.81.0",
     "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#v1.0.2",
     "stream-data": "git://github.com/WHRB/stream-data.git#master"
