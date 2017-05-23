@@ -3,7 +3,7 @@
   "version": "1.2.1",
   "description": "Rest API for accessing public data about a radio station.",
   "engines": {
-    "node": "4.4"
+    "node": "6.10"
   },
   "main": "app.js",
   "directories": {
