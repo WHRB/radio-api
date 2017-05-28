@@ -42,7 +42,8 @@
     "radio-plays": "git://github.com/WHRB/recent-plays.git#v2.1.0",
     "request": "^2.81.0",
     "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#v1.0.2",
-    "stream-data": "git://github.com/WHRB/stream-data.git#master"
+    "stream-data": "git://github.com/WHRB/stream-data.git#master",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "chai": "^3.4.0",
