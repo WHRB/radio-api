@@ -4,8 +4,6 @@ node_js:
 cache:
   directories:
   - node_modules
-before_install:
-- npm prune
 deploy:
   provider: elasticbeanstalk
   access_key_id: AKIAJUL5E2AONRYU6A6A
@@ -14,5 +12,6 @@ deploy:
   region: us-east-1
   app: whrb-api
   env: whrbApi-env
+  bucket_name: whrb-travis-deploy
   on:
     repo: WHRB/radio-api
