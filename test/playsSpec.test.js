@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-
 "use strict";
+
+delete require.cache[require.resolve("../lib/radio-plays/plays")];
 
 const expect = require("chai").expect;
 const RadioPlays = require("../lib/radio-plays/plays");
