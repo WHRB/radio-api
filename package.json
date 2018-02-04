@@ -6,20 +6,18 @@
     "node": "8.6"
   },
   "main": "app.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": ["prettier --write", "git add"]
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/WHRB/radio-api"
   },
-  "keywords": [
-    "radio",
-    "api"
-  ],
+  "keywords": ["radio", "api"],
   "author": "Carl Pillot",
   "license": "MIT",
   "bugs": {
@@ -31,25 +29,26 @@
     "compression": "^1.6.2",
     "cors": "^2.8.3",
     "express": "^4.15.3",
-    "lodash": "^4.15.0",
     "logfmt": "^1.1.2",
+    "md5": "^2.2.1",
     "moment": "^2.18.1",
-    "ms": "^2.0.0",
+    "moment-timezone": "^0.5.14",
     "node-cache": "^4.1.1",
     "node-fetch": "^1.6.0",
-    "pg": "^6.2.2",
-    "pg-query": "^0.11.0",
-    "radio-plays": "git://github.com/WHRB/recent-plays.git#v2.1.0",
     "request": "^2.81.0",
-    "schedule-data-fetch": "git://github.com/WHRB/schedule-data-fetch.git#v1.0.3",
-    "stream-data": "git://github.com/WHRB/stream-data.git#master",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
-    "mocha": "^5.0.0"
+    "husky": "^0.14.3",
+    "lint-staged": "^6.1.0",
+    "mocha": "^5.0.0",
+    "nock": "^9.1.6",
+    "prettier": "1.10.2"
   }
 }

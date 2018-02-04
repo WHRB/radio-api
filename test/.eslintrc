@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+  "rules": {
+    "max-len": ["error", 150, 4],
+    "no-console": "off"
+  },
+  "parserOptions": {
+    "sourceType": "script"
+  },
+  "env": {
+    "mocha": true
+  }
+}
