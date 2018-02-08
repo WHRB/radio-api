@@ -27,3 +27,13 @@ node_modules
 # ignore configuration files
 testenv.js
 .env
+
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
