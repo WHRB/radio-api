@@ -1,124 +1,73 @@
-var expect = require("chai").expect;
-var request = require("request");
-var makeServer = require("../lib/server");
+'use strict';
 
-if (!process.env.hasOwnProperty("SPIN_STATION")
- || !process.env.hasOwnProperty("SPIN_USERID")
- || !process.env.hasOwnProperty("SPIN_SECRET")
- || !process.env.hasOwnProperty("SCHEDULE_ID")
- || !process.env.hasOwnProperty("SCHEDULE_API_KEY")) {
-  require("../testenv.js");
+const { expect } = require('chai');
+const makeServer = require('../lib/server');
+const request = require('superagent');
+
+if (
+  !process.env.SPIN_STATION ||
+  !process.env.SPIN_USERID ||
+  !process.env.SPIN_SECRET ||
+  !process.env.SCHEDULE_ID ||
+  !process.env.SCHEDULE_API_KEY
+) {
+  require('../testenv.js'); // eslint-disable-line
 }
 
-describe("/schedule", function () {
-  var app;
-
-  this.timeout(5000);
-
-  before(function() {
+describe('Integration Tests', function() {
+  let app;
+  beforeEach(function() {
     app = makeServer(3000);
   });
 
-  after(function() {
+  afterEach(function() {
     app.close();
   });
 
-  it("should return valid schedule events", function (done){
+  describe('/schedule', function() {
+    it('should return valid schedule events', async function() {
+      const res = await request('http://localhost:3000/schedule');
 
-    request("http://localhost:3000/schedule", function (error, response, body) {
-      if (error) {
-        throw error;
-      }
+      expect(res.status).to.equal(200);
 
-      expect(response.statusCode).to.equal(200);
-      var scheduleData = JSON.parse(body);
+      const scheduleData = res.body;
 
-      var first = scheduleData[0];
+      const first = scheduleData[0];
 
       expect(scheduleData.length).to.be.above(0);
-      expect(first).to.have.property("title");
-      expect(first).to.have.property("startTime");
-      expect(first).to.have.property("endTime");
-
-      done();
+      expect(first).to.have.property('title');
+      expect(first).to.have.property('startTime');
+      expect(first).to.have.property('endTime');
     });
-
   });
 
-});
+  describe('/nowplaying', function() {
+    it('should return current playing song data', async function() {
+      const res = await request('http://localhost:3000/nowplaying');
 
-describe("/nowplaying", function () {
+      expect(res.status).to.equal(200);
+      const songData = res.body;
 
-  var app;
-
-  this.timeout(5000);
-
-  before(function() {
-    app = makeServer(3000);
-  });
-
-  after(function() {
-    app.close();
-  });
-
-  it("should return current playing song data", function (done) {
-
-    request("http://localhost:3000/nowplaying", function (error, response, body) {
-      if (error) {
-        throw error;
-      }
-
-      expect(response.statusCode).to.equal(200);
-      var songData = JSON.parse(body);
-
-      expect(songData).to.be.an("object");
-      expect(songData).to.have.property("SongName");
-      expect(songData).to.have.property("ShowInfo");
-
-      done();
+      expect(songData).to.be.an('object');
+      expect(songData).to.have.property('SongName');
+      expect(songData).to.have.property('ShowInfo');
     });
-
   });
 
-});
+  describe('/recentplays', function() {
+    it('should return the specified number of recently played songs', async function() {
+      const res = await request('http://localhost:3000/recentplays/3');
 
-describe("/recentplays", function () {
-
-  var app;
-
-  this.timeout(5000);
-
-  before(function() {
-    app = makeServer(3000);
-  });
-
-  after(function() {
-    app.close();
-  });
-
-  it("should return the specified number of recently played songs", function (done) {
-
-    request("http://localhost:3000/recentplays/3", function (error, response, body) {
-      if (error) {
-        throw error;
-      }
-
-      expect(response.statusCode).to.equal(200);
-      var songData = JSON.parse(body);
+      expect(res.status).to.equal(200);
+      const songData = res.body;
 
       expect(songData.length).to.equal(3);
-      expect(songData[0]).to.have.property("SongName");
-      expect(songData[0]).to.have.property("ShowInfo");
-
-      done();
+      expect(songData[0]).to.have.property('SongName');
+      expect(songData[0]).to.have.property('ShowInfo');
     });
-
   });
 
-});
-
-describe("/streams", function () {
-
-  it("should return a list of available audio streams");
-
+  describe('/streams', function() {
+    it('should return a list of available audio streams');
+  });
 });

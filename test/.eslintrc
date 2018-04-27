@@ -3,14 +3,16 @@
     "airbnb-base",
     "prettier"
   ],
-  "rules": {
-    "max-len": ["error", 150, 4],
-    "no-console": "off"
-  },
   "parserOptions": {
     "sourceType": "script"
   },
   "env": {
     "mocha": true
+  },
+  "rules": {
+    "max-len": ["error", 150, 4],
+    "no-console": "off",
+    "func-names": "off",
+    "prefer-arrow-callback": "off"
   }
 }
