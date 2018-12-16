@@ -1,7 +1,8 @@
 {
   "name": "radio-api",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "REST API for accessing public data about a radio station.",
+  "private": true,
   "engines": {
     "node": "8.11"
   },
@@ -35,30 +36,30 @@
   },
   "homepage": "https://github.com/WHRB/radio-api",
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "compression": "^1.6.2",
-    "cors": "^2.8.3",
-    "express": "^4.15.3",
-    "logfmt": "^1.1.2",
+    "bluebird": "^3.5.3",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "logfmt": "^1.2.1",
     "md5": "^2.2.1",
-    "moment": "^2.18.1",
-    "moment-timezone": "^0.5.14",
-    "node-cache": "^4.1.1",
+    "moment": "^2.23.0",
+    "moment-timezone": "^0.5.23",
+    "node-cache": "^4.2.0",
     "node-fetch": "^1.6.0",
-    "superagent": "^3.8.2",
-    "uuid": "^3.0.1"
+    "superagent": "^3.8.3",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^4.17.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-prettier": "^2.10.0",
+    "eslint-plugin-import": "^2.14.0",
     "husky": "^0.14.3",
-    "lint-staged": "^6.1.0",
-    "mocha": "^5.0.0",
-    "nock": "^9.1.6",
+    "lint-staged": "^6.1.1",
+    "mocha": "^5.2.0",
+    "nock": "^9.6.1",
     "prettier": "1.10.2"
   }
 }
