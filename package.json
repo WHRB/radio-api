@@ -1,6 +1,6 @@
 {
   "name": "radio-api",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "REST API for accessing public data about a radio station.",
   "private": true,
   "engines": {
