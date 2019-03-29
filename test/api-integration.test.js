@@ -5,9 +5,7 @@ const makeServer = require('../lib/server');
 const request = require('superagent');
 
 if (
-  !process.env.SPIN_STATION ||
-  !process.env.SPIN_USERID ||
-  !process.env.SPIN_SECRET ||
+  !process.env.SPIN_V2_API_TOKEN ||
   !process.env.SCHEDULE_ID ||
   !process.env.SCHEDULE_API_KEY
 ) {
