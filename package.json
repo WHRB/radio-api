@@ -9,8 +9,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha --exit",
-    "precommit": "lint-staged"
+    "test": "mocha --exit"
   },
   "lint-staged": {
     "*.{js,json,css,md}": [
@@ -61,5 +60,10 @@
     "mocha": "^6.1.4",
     "nock": "^10.0.6",
     "prettier": "1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
