@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:12
 WORKDIR /app
 ADD package.json /app
 ADD package-lock.json /app

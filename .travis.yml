@@ -1,17 +1,6 @@
 language: node_js
 node_js:
-- 8
+- 12
 cache:
   directories:
   - node_modules
-# deploy:
-#   provider: elasticbeanstalk
-#   access_key_id: AKIAJUL5E2AONRYU6A6A
-#   secret_access_key:
-#     secure: lERzUsjokZWzeNlWHcC9LNiteTqWUgekvmYeIFZunDBMxXiJhb3aGn167lUUQEIUxhd9c6j8uhMTPoWRa9vprHPcWeU7gW7rHtfP9Rc5N+2uSK72NKWMGuIHaqlnOTlLv7M6lKnExaN34KYFOV3Fs5g0aBjRtI0dma3nvJJnHPI51nLEd41QY54NblcoS3Qmss78jNIP4gNxBke6JQNKkWs+iuLQQXwE5ZInFTupM2VcW6pvNPyzwtscyEp1s2wZQtFwsTbTpVmSjNWckSfaBwq51a5epJqScpE/BP2wbOZh55/k3t/17ZCgDZo09ioZ1rN9op3G09hQ5+20/C0VXHP/C7mctwFvo9jyYUKmmX/8hQEdlSw1f2wYJYHfal/O4yVFeeoDCh+SdY9ThZP9PKfeYB+3iwPqcAcP3EwwUcJyFi2tNgf6IcIqnaHH0CZg8OoSuBWlXFZaVa2hBkzvvMvLe/BooV7CrPn9KX+enDrqyoVRczwomX6rCQXVW0RzRSnAZmR/rIrHOo7wQR5Xkf6k17nN4H9C7Sce9t4db+w9xGG3aUYuoRjQg6jtxDTUzMdNyo+Bpznd0ujYCbIzyyrKu510XIQWnYdmtGSXMkjC9KXwkcMvLZejM33u0eC1YBxWT5JrMzklJF7wn/dNsHGm8Zr/nLD1B+iKt10Rr/A=
-#   region: us-east-1
-#   app: whrbapi-application
-#   env: whrbapi-dev
-#   bucket_name: whrb-travis-deploy
-#   on:
-#     repo: WHRB/radio-api
