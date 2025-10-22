@@ -47,7 +47,7 @@
     "node-cache": "^5.0.0",
     "node-fetch": "^2.6.7",
     "superagent": "^6.1.0",
-    "uuid": "^8.0.0"
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
