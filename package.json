@@ -46,7 +46,7 @@
     "moment-timezone": "^0.6.0",
     "node-cache": "^5.0.0",
     "node-fetch": "^2.6.7",
-    "superagent": "^6.1.0",
+    "superagent": "^10.2.3",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
