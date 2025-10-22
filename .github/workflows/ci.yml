@@ -1,0 +1,19 @@
+name: CI Actions
+run-name: ${{ github.actor }} is running CI
+on: [push]
+jobs:
+  Run-Tests:
+    runs-on: ubuntu-latest
+    env:
+      SPIN_V2_API_TOKEN: ${{ secrets.SPINITRON_SECRET }}
+      SCHEDULE_ID: ${{ secrets.SCHEDULE_ID }}
+      SCHEDULE_API_KEY: ${{ secrets.SCHEDULE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+      - run: npm ci
+      - run: npm test
+
