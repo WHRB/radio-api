@@ -1,9 +1,7 @@
-'use strict';
+import makeServer from './lib/server.js';
 
-var makeServer = require('./lib/server');
+const port = Number(process.env.PORT || 3000);
 
-var port = Number(process.env.PORT || 3000);
-
-var server = makeServer(port, function() {
+const server = makeServer(port, () => {
   console.log('Listening on port %d', server.address().port);
 });
