@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import * as ScheduleManager from '../lib/schedule/scheduleManager.js';
+import * as ScheduleManager from '../lib/schedule/schedule-manager.js';
 import moment from 'moment';
 
 if (
@@ -30,8 +30,8 @@ describe('ScheduleManager', function () {
           ScheduleManager.addSource,
           'foo',
           {},
-          'bar'
-        )
+          'bar',
+        ),
       ).to.throw('SourceType not defined.');
     });
 
@@ -44,8 +44,8 @@ describe('ScheduleManager', function () {
             calendarID: googleCalendarID,
             apiKey: googleAPIKey,
           },
-          'testSource'
-        )
+          'testSource',
+        ),
       ).to.not.throw(Error);
     });
 
@@ -56,7 +56,7 @@ describe('ScheduleManager', function () {
           calendarID: googleCalendarID,
           apiKey: googleAPIKey,
         },
-        'testDupe'
+        'testDupe',
       );
 
       expect(
@@ -67,8 +67,8 @@ describe('ScheduleManager', function () {
             calendarID: googleCalendarID,
             apiKey: googleAPIKey,
           },
-          'testDupe'
-        )
+          'testDupe',
+        ),
       ).to.throw('Key already exists.');
     });
 
@@ -79,7 +79,7 @@ describe('ScheduleManager', function () {
           calendarID: googleCalendarID,
           apiKey: googleAPIKey,
         },
-        'testSource2'
+        'testSource2',
       );
 
       ScheduleManager.removeSource('testSource2');
@@ -92,8 +92,8 @@ describe('ScheduleManager', function () {
             calendarID: googleCalendarID,
             apiKey: googleAPIKey,
           },
-          'testSource2'
-        )
+          'testSource2',
+        ),
       ).to.not.throw(Error);
     });
 
@@ -108,8 +108,8 @@ describe('ScheduleManager', function () {
       expect(
         ScheduleManager.removeSource.bind(
           ScheduleManager.removeSource,
-          'badKey'
-        )
+          'badKey',
+        ),
       ).to.throw('Key does not exist.');
     });
   });
@@ -124,7 +124,7 @@ describe('ScheduleManager', function () {
           calendarID: googleCalendarID,
           apiKey: googleAPIKey,
         },
-        'non-existent-source'
+        'non-existent-source',
       );
 
       expect(ScheduleManager.hasSource('non-existent-source')).to.be.true;
@@ -142,7 +142,7 @@ describe('ScheduleManager', function () {
       apiKey: googleAPIKey,
       cacheTime: 10,
     },
-    'shows'
+    'shows',
   );
 
   describe('#getSchedule()', function () {
@@ -152,8 +152,8 @@ describe('ScheduleManager', function () {
           ScheduleManager.getSchedule,
           'badKey',
           {},
-          null
-        )
+          null,
+        ),
       ).to.throw('Key does not exist.');
     });
 
@@ -171,7 +171,7 @@ describe('ScheduleManager', function () {
           expect(results.length).to.equal(10);
           expect(now.isBefore(endMoment)).to.be.true;
           done();
-        }
+        },
       );
     });
   });
@@ -182,8 +182,8 @@ describe('ScheduleManager', function () {
         ScheduleManager.getCurrentEvent.bind(
           ScheduleManager.getCurrentEvent,
           'badKey',
-          null
-        )
+          null,
+        ),
       ).to.throw('Key does not exist.');
     });
 
