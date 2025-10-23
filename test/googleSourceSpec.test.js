@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import googleSource from '../lib/schedule/googleSource.js';
+import googleSource from '../lib/schedule/google-source.js';
 import moment from 'moment';
 
 if (
@@ -17,12 +17,12 @@ const googleAPIKey = process.env.SCHEDULE_API_KEY;
 describe('GoogleSource', function () {
   it('should throw an error if calendar ID is not specified', function () {
     expect(googleSource.bind(googleSource, {})).to.throw(
-      'Calendar ID must be supplied'
+      'Calendar ID must be supplied',
     );
     expect(
       googleSource.bind(googleSource, {
         calendarID: '',
-      })
+      }),
     ).to.throw('Calendar ID must be supplied');
   });
 
@@ -30,13 +30,13 @@ describe('GoogleSource', function () {
     expect(
       googleSource.bind(googleSource, {
         calendarID: 1,
-      })
+      }),
     ).to.throw('API key must be supplied');
     expect(
       googleSource.bind(googleSource, {
         calendarID: 1,
         apiKey: '',
-      })
+      }),
     ).to.throw('API key must be supplied');
   });
 
@@ -82,7 +82,7 @@ describe('GoogleSource', function () {
           }
           expect(results.length).to.equal(1);
           done();
-        }
+        },
       );
     });
 
@@ -97,7 +97,7 @@ describe('GoogleSource', function () {
           }
           expect(results.length).to.equal(10);
           done();
-        }
+        },
       );
     });
 
@@ -119,7 +119,7 @@ describe('GoogleSource', function () {
           }
 
           done();
-        }
+        },
       );
     });
   });
