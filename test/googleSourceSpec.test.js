@@ -1,56 +1,54 @@
-"use strict";
-
-var expect = require("chai").expect;
-var googleSource = require("../lib/schedule/googleSource");
-var moment = require("moment");
+import { expect } from 'chai';
+import googleSource from '../lib/schedule/googleSource.js';
+import moment from 'moment';
 
 if (
-  !process.env.hasOwnProperty("SCHEDULE_ID") ||
-  !process.env.hasOwnProperty("SCHEDULE_API_KEY")
+  !process.env.hasOwnProperty('SCHEDULE_ID') ||
+  !process.env.hasOwnProperty('SCHEDULE_API_KEY')
 ) {
-  require("../testenv.js");
+  await import('../testenv.js');
 }
 
-var googleCalendarID = process.env.SCHEDULE_ID;
-var googleAPIKey = process.env.SCHEDULE_API_KEY;
+const googleCalendarID = process.env.SCHEDULE_ID;
+const googleAPIKey = process.env.SCHEDULE_API_KEY;
 
 // TODO: Test bad inputs
 
-describe("GoogleSource", function() {
-  it("should throw an error if calendar ID is not specified", function() {
+describe('GoogleSource', function () {
+  it('should throw an error if calendar ID is not specified', function () {
     expect(googleSource.bind(googleSource, {})).to.throw(
-      "Calendar ID must be supplied"
+      'Calendar ID must be supplied'
     );
     expect(
       googleSource.bind(googleSource, {
-        calendarID: ""
+        calendarID: '',
       })
-    ).to.throw("Calendar ID must be supplied");
+    ).to.throw('Calendar ID must be supplied');
   });
 
-  it("should throw an error if an API key is not specified", function() {
-    expect(
-      googleSource.bind(googleSource, {
-        calendarID: 1
-      })
-    ).to.throw("API key must be supplied");
+  it('should throw an error if an API key is not specified', function () {
     expect(
       googleSource.bind(googleSource, {
         calendarID: 1,
-        apiKey: ""
       })
-    ).to.throw("API key must be supplied");
+    ).to.throw('API key must be supplied');
+    expect(
+      googleSource.bind(googleSource, {
+        calendarID: 1,
+        apiKey: '',
+      })
+    ).to.throw('API key must be supplied');
   });
 
-  var source = googleSource({
+  const source = googleSource({
     // Get keys from environment
     calendarID: googleCalendarID,
-    apiKey: googleAPIKey
+    apiKey: googleAPIKey,
   });
 
-  describe("#getCurrentEvent()", function() {
-    it("should return closest event to current time", function(done) {
-      source.getCurrentEvent(function(err, result) {
+  describe('#getCurrentEvent()', function () {
+    it('should return closest event to current time', function (done) {
+      source.getCurrentEvent(function (err, result) {
         var endMoment = moment(result.endTime);
         var now = moment();
         expect(now.isBefore(endMoment)).to.be.true;
@@ -60,9 +58,9 @@ describe("GoogleSource", function() {
     });
   });
 
-  describe("#getEvents()", function() {
-    it("should return an array of events", function(done) {
-      source.getEvents({ maxResults: 25 }, function(err, results) {
+  describe('#getEvents()', function () {
+    it('should return an array of events', function (done) {
+      source.getEvents({ maxResults: 25 }, function (err, results) {
         if (err) {
           throw err;
         }
@@ -73,12 +71,12 @@ describe("GoogleSource", function() {
       });
     });
 
-    it("should return an array of events of the specified length", function(done) {
+    it('should return an array of events of the specified length', function (done) {
       source.getEvents(
         {
-          maxResults: 1
+          maxResults: 1,
         },
-        function(err, results) {
+        function (err, results) {
           if (err) {
             throw err;
           }
@@ -88,12 +86,12 @@ describe("GoogleSource", function() {
       );
     });
 
-    it("should return an array of events of the specified length", function(done) {
+    it('should return an array of events of the specified length', function (done) {
       source.getEvents(
         {
-          maxResults: 10
+          maxResults: 10,
         },
-        function(err, results) {
+        function (err, results) {
           if (err) {
             throw err;
           }
@@ -103,21 +101,21 @@ describe("GoogleSource", function() {
       );
     });
 
-    it("should return an array of event objects with the properties: title, content, startTime, and endTime", function(done) {
+    it('should return an array of event objects with the properties: title, content, startTime, and endTime', function (done) {
       source.getEvents(
         {
-          maxResults: 10
+          maxResults: 10,
         },
-        function(err, results) {
+        function (err, results) {
           if (err) {
             throw err;
           }
 
-          for (var i = 0; i < results.length; i++) {
-            expect(results[i]).to.have.property("title");
-            expect(results[i]).to.have.property("content");
-            expect(results[i]).to.have.property("startTime");
-            expect(results[i]).to.have.property("endTime");
+          for (let i = 0; i < results.length; i++) {
+            expect(results[i]).to.have.property('title');
+            expect(results[i]).to.have.property('content');
+            expect(results[i]).to.have.property('startTime');
+            expect(results[i]).to.have.property('endTime');
           }
 
           done();

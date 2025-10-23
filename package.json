@@ -3,6 +3,7 @@
   "version": "1.6.0",
   "description": "REST API for accessing public data about a radio station.",
   "private": true,
+  "type": "module",
   "engines": {
     "node": "24"
   },

@@ -1,29 +1,27 @@
-'use strict';
-
-const { expect } = require('chai');
-const makeServer = require('../lib/server');
-const request = require('superagent');
+import { expect } from 'chai';
+import makeServer from '../lib/server.js';
+import request from 'superagent';
 
 if (
   !process.env.SPIN_V2_API_TOKEN ||
   !process.env.SCHEDULE_ID ||
   !process.env.SCHEDULE_API_KEY
 ) {
-  require('../testenv.js'); // eslint-disable-line
+  await import('../testenv.js');
 }
 
-describe('Integration Tests', function() {
+describe('Integration Tests', function () {
   let app;
-  beforeEach(function() {
+  beforeEach(function () {
     app = makeServer(3000);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     app.close();
   });
 
-  describe('/schedule', function() {
-    it('should return valid schedule events', async function() {
+  describe('/schedule', function () {
+    it('should return valid schedule events', async function () {
       const res = await request('http://localhost:3000/schedule');
 
       expect(res.status).to.equal(200);
@@ -39,8 +37,8 @@ describe('Integration Tests', function() {
     });
   });
 
-  describe('/nowplaying', function() {
-    it('should return current playing song data', async function() {
+  describe('/nowplaying', function () {
+    it('should return current playing song data', async function () {
       const res = await request('http://localhost:3000/nowplaying');
 
       expect(res.status).to.equal(200);
@@ -52,8 +50,8 @@ describe('Integration Tests', function() {
     });
   });
 
-  describe('/recentplays', function() {
-    it('should return the specified number of recently played songs', async function() {
+  describe('/recentplays', function () {
+    it('should return the specified number of recently played songs', async function () {
       const res = await request('http://localhost:3000/recentplays/3');
 
       expect(res.status).to.equal(200);
@@ -65,7 +63,7 @@ describe('Integration Tests', function() {
     });
   });
 
-  describe('/streams', function() {
+  describe('/streams', function () {
     it('should return a list of available audio streams');
   });
 });

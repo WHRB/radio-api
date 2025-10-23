@@ -1,7 +1,5 @@
-delete require.cache[require.resolve('../lib/radio-plays/plays')];
-
-const expect = require('chai').expect;
-const RadioPlays = require('../lib/radio-plays/plays');
+import { expect } from 'chai';
+import * as RadioPlays from '../lib/radio-plays/plays.js';
 
 const token = 'this';
 
@@ -23,6 +21,10 @@ describe('RadioPlays', () => {
   });
 
   describe('#getCurrent()', () => {
+    beforeEach(() => {
+      RadioPlays.removeSource();
+    });
+
     it("should throw an error if source hasn't been set", () => {
       expect(
         RadioPlays.getCurrent.bind(RadioPlays.getCurrent, () => {})
@@ -33,6 +35,10 @@ describe('RadioPlays', () => {
   });
 
   describe('#recentPlays()', () => {
+    beforeEach(() => {
+      RadioPlays.removeSource();
+    });
+
     it("should throw an error if source hasn't been set", () => {
       expect(
         RadioPlays.recentPlays.bind(RadioPlays.recentPlays, 5, () => {})
