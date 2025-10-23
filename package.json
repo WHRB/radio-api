@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node app.js",
     "test": "mocha --exit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint lib"
   },
   "lint-staged": {
     "*.{js,json,css,md}": [
@@ -51,8 +52,8 @@
   "devDependencies": {
     "chai": "^6.0.0",
     "chai-as-promised": "^8.0.0",
-    "eslint": "^7.0.0",
-    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "husky": "^7.0.0",
