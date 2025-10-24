@@ -37,3 +37,6 @@ testenv.js
 
 # .tfvars files
 *.tfvars
+
+
+dist
