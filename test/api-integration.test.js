@@ -1,39 +1,33 @@
-import { expect } from 'chai';
+import dotenv from 'dotenv';
 import makeServer from '../lib/server.js';
 import request from 'superagent';
 
-if (
-  !process.env.SPIN_V2_API_TOKEN ||
-  !process.env.SCHEDULE_ID ||
-  !process.env.SCHEDULE_API_KEY
-) {
-  await import('../testenv.js');
-}
+dotenv.config();
 
 describe('Integration Tests', function () {
-  let app;
+  let closeApp;
   beforeEach(function () {
-    app = makeServer(3000);
+    closeApp = makeServer(3000);
   });
 
   afterEach(function () {
-    app.close();
+    closeApp();
   });
 
   describe('/schedule', function () {
     it('should return valid schedule events', async function () {
       const res = await request('http://localhost:3000/schedule');
 
-      expect(res.status).to.equal(200);
+      expect(res.status).toBe(200);
 
       const scheduleData = res.body;
 
       const first = scheduleData[0];
 
-      expect(scheduleData.length).to.be.above(0);
-      expect(first).to.have.property('title');
-      expect(first).to.have.property('startTime');
-      expect(first).to.have.property('endTime');
+      expect(scheduleData.length).toBeGreaterThan(0);
+      expect(first).toHaveProperty('title');
+      expect(first).toHaveProperty('startTime');
+      expect(first).toHaveProperty('endTime');
     });
   });
 
@@ -41,12 +35,12 @@ describe('Integration Tests', function () {
     it('should return current playing song data', async function () {
       const res = await request('http://localhost:3000/nowplaying');
 
-      expect(res.status).to.equal(200);
+      expect(res.status).toBe(200);
       const songData = res.body;
 
-      expect(songData).to.be.an('object');
-      expect(songData).to.have.property('SongName');
-      expect(songData).to.have.property('ShowInfo');
+      expect(typeof songData).toBe('object');
+      expect(songData).toHaveProperty('SongName');
+      expect(songData).toHaveProperty('ShowInfo');
     });
   });
 
@@ -54,16 +48,12 @@ describe('Integration Tests', function () {
     it('should return the specified number of recently played songs', async function () {
       const res = await request('http://localhost:3000/recentplays/3');
 
-      expect(res.status).to.equal(200);
+      expect(res.status).toBe(200);
       const songData = res.body;
 
-      expect(songData.length).to.equal(3);
-      expect(songData[0]).to.have.property('SongName');
-      expect(songData[0]).to.have.property('ShowInfo');
+      expect(songData.length).toBe(3);
+      expect(songData[0]).toHaveProperty('SongName');
+      expect(songData[0]).toHaveProperty('ShowInfo');
     });
-  });
-
-  describe('/streams', function () {
-    it('should return a list of available audio streams');
   });
 });

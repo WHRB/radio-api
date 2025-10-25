@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import unicornPlugin from 'eslint-plugin-unicorn';
+import jestPlugin from 'eslint-plugin-jest';
 import prettierConfig from 'eslint-config-prettier';
 
 export default [
@@ -7,7 +8,7 @@ export default [
   js.configs.recommended,
 
   // Unicorn recommended rules
-  unicornPlugin.configs['flat/recommended'],
+  unicornPlugin.configs['recommended'],
 
   // Main configuration
   {
@@ -46,20 +47,24 @@ export default [
 
   // Test files configuration
   {
-    files: ['test/**/*.js'],
+    files: ['test/**/*.js', 'test/**/*.ts'],
+    plugins: {
+      jest: jestPlugin,
+    },
     languageOptions: {
       globals: {
-        describe: 'readonly',
-        it: 'readonly',
-        before: 'readonly',
-        after: 'readonly',
-        beforeEach: 'readonly',
-        afterEach: 'readonly',
+        ...jestPlugin.environments.globals.globals,
       },
     },
     rules: {
+      ...jestPlugin.configs.recommended.rules,
       'func-names': 'off',
       'prefer-arrow-callback': 'off',
+      'jest/expect-expect': 'error',
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/valid-expect': 'error',
     },
   },
 

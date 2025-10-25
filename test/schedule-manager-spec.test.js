@@ -1,13 +1,8 @@
-import { expect } from 'chai';
+import dotenv from 'dotenv';
 import * as ScheduleManager from '../lib/schedule/schedule-manager.js';
 import moment from 'moment';
 
-if (
-  !process.env.hasOwnProperty('SCHEDULE_ID') ||
-  !process.env.hasOwnProperty('SCHEDULE_API_KEY')
-) {
-  await import('../testenv.js');
-}
+dotenv.config();
 
 const googleCalendarID = process.env.SCHEDULE_ID;
 const googleAPIKey = process.env.SCHEDULE_API_KEY;
@@ -18,8 +13,8 @@ describe('ScheduleManager', function () {
   describe('#getSourceTypes()', function () {
     it('should return an array with available source types', function () {
       const results = ScheduleManager.getSourceTypes();
-      expect(Array.isArray(results)).to.equal(true);
-      expect(results.length).to.be.above(0);
+      expect(Array.isArray(results)).toBe(true);
+      expect(results.length).toBeGreaterThan(0);
     });
   });
 
@@ -32,7 +27,7 @@ describe('ScheduleManager', function () {
           {},
           'bar',
         ),
-      ).to.throw('SourceType not defined.');
+      ).toThrow('SourceType not defined.');
     });
 
     it('should successfully add available source to sources', function () {
@@ -46,7 +41,7 @@ describe('ScheduleManager', function () {
           },
           'testSource',
         ),
-      ).to.not.throw(Error);
+      ).not.toThrow(Error);
     });
 
     it('should throw an error if calendar key already exists', function () {
@@ -69,7 +64,7 @@ describe('ScheduleManager', function () {
           },
           'testDupe',
         ),
-      ).to.throw('Key already exists.');
+      ).toThrow('Key already exists.');
     });
 
     it('should successfully add a source with the same key as a previously deleted source', function () {
@@ -94,10 +89,10 @@ describe('ScheduleManager', function () {
           },
           'testSource2',
         ),
-      ).to.not.throw(Error);
+      ).not.toThrow(Error);
     });
 
-    after(function () {
+    afterAll(function () {
       ScheduleManager.removeSource('testSource');
       ScheduleManager.removeSource('testDupe');
     });
@@ -110,13 +105,13 @@ describe('ScheduleManager', function () {
           ScheduleManager.removeSource,
           'badKey',
         ),
-      ).to.throw('Key does not exist.');
+      ).toThrow('Key does not exist.');
     });
   });
 
   describe('#hasSource()', function () {
     it('should return whether or not a source exists', function () {
-      expect(ScheduleManager.hasSource('non-existent-source')).to.be.false;
+      expect(ScheduleManager.hasSource('non-existent-source')).toBe(false);
 
       ScheduleManager.addSource(
         'Google',
@@ -127,10 +122,10 @@ describe('ScheduleManager', function () {
         'non-existent-source',
       );
 
-      expect(ScheduleManager.hasSource('non-existent-source')).to.be.true;
+      expect(ScheduleManager.hasSource('non-existent-source')).toBe(true);
     });
 
-    after(function () {
+    afterAll(function () {
       ScheduleManager.removeSource('non-existent-source');
     });
   });
@@ -154,25 +149,31 @@ describe('ScheduleManager', function () {
           {},
           null,
         ),
-      ).to.throw('Key does not exist.');
+      ).toThrow('Key does not exist.');
     });
 
-    it('should return the specified number of upcoming schedule events (inclusive)', function (done) {
-      ScheduleManager.getSchedule(
-        'shows',
-        {
-          maxResults: 10,
-        },
-        function (err, results) {
-          const first = results[0];
-          const endMoment = moment(first.endTime);
-          const now = moment();
+    it('should return the specified number of upcoming schedule events (inclusive)', function () {
+      return new Promise((resolve, reject) => {
+        ScheduleManager.getSchedule(
+          'shows',
+          {
+            maxResults: 10,
+          },
+          function (err, results) {
+            if (err) {
+              reject(err);
+              return;
+            }
+            const first = results[0];
+            const endMoment = moment(first.endTime);
+            const now = moment();
 
-          expect(results.length).to.equal(10);
-          expect(now.isBefore(endMoment)).to.be.true;
-          done();
-        },
-      );
+            expect(results.length).toBe(10);
+            expect(now.isBefore(endMoment)).toBe(true);
+            resolve();
+          },
+        );
+      });
     });
   });
 
@@ -184,15 +185,21 @@ describe('ScheduleManager', function () {
           'badKey',
           null,
         ),
-      ).to.throw('Key does not exist.');
+      ).toThrow('Key does not exist.');
     });
 
-    it('should return the closest item to the current time', function (done) {
-      ScheduleManager.getCurrentEvent('shows', function (err, result) {
-        const endMoment = moment(result.endTime);
-        const now = moment();
-        expect(now.isBefore(endMoment)).to.be.true;
-        done();
+    it('should return the closest item to the current time', function () {
+      return new Promise((resolve, reject) => {
+        ScheduleManager.getCurrentEvent('shows', function (err, result) {
+          if (err) {
+            reject(err);
+            return;
+          }
+          const endMoment = moment(result.endTime);
+          const now = moment();
+          expect(now.isBefore(endMoment)).toBe(true);
+          resolve();
+        });
       });
     });
   });
