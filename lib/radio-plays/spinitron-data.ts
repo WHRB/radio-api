@@ -10,6 +10,7 @@ interface SongPlay {
   note: string;
   composer: string;
   release: string;
+  released: number | null;
   label: string;
   start: string;
   timezone: string;
@@ -37,6 +38,7 @@ interface LegacyPlay {
   SongNote: string;
   ComposerName: string;
   DiskName: string;
+  DiskReleased: number | null;
   LabelName: string;
   isoTime: string;
   Date: string;
@@ -135,6 +137,7 @@ class SpinitronData {
         SongNote: play.note,
         ComposerName: play.composer,
         DiskName: play.release,
+        DiskReleased: play.released,
         LabelName: play.label,
         isoTime: time.format(),
         Date: time.format('YYYY-MM-DD'),
@@ -196,6 +199,7 @@ class SpinitronData {
         note: play.note,
         composer: play.composer,
         release: play.release,
+        released: play.released,
         label: play.label,
         start: play.start,
         timezone: play.timezone,
