@@ -44,6 +44,7 @@ interface LegacyPlay {
   Date: string;
   Timestamp: string;
   ShowInfo: LegacyShow | null;
+  hash: string;
 }
 
 interface LegacyShow {
@@ -142,6 +143,7 @@ class SpinitronData {
         isoTime: time.format(),
         Date: time.format('YYYY-MM-DD'),
         Timestamp: time.format('HH:mm:ss'),
+        hash: `${play.id}`,
       };
 
       legacyPlays.push(legacyPlay);
